@@ -6,7 +6,7 @@ const request= require('request')
 const app=express()
 
 
-const apiKey='c36572016d03391554f98725b9f3741f'
+const apiKey='28eaebb32d7a79fad8ebd6f3a24cd28c'
 
 app.use(express.static('public'))
 app.use(express.json());
@@ -21,13 +21,14 @@ app.use(express.urlencoded({
   })
   app.post('/',(req,res)=>{
       let city=req.body.city
-      let url=`api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
-     // console.log(url)
-    // console.log(body);
+      let url=`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=28eaebb32d7a79fad8ebd6f3a24cd28c`
+      
+      
       request(url,function(err,response,body){
         
+        console.log(body);
           if(err){
-              res.render('index',{weather:null,error:'Please try again'})
+              res.render('index',{weather:null ,error:'Please try again'})
           }
           else{
               let weather=JSON.parse(body)
@@ -38,7 +39,7 @@ app.use(express.urlencoded({
                       error:'please try again'
                   })
               }else{
-                  weatherText=`It's ${weather.main.temp} degree celcius with ${weather.weather[0].main} in ${weather.name}`
+                 let weatherText=`It's ${weather.main.temp} degree celcius with ${weather.weather[0].main} in ${weather.name}`
                   res.render('index',{weather:weatherText,error:null})
                   console.log('body:',body);
               }
